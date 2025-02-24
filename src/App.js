@@ -1,13 +1,21 @@
-import './App.css';
+import { useState } from 'react';
+import SearchBar from './components/SearchBar';
+import MovieList from './components/MovieList';
+import Favorites from './components/Favorites';
+import { FavoritesProvider } from './contexts/FavoritesContext';
 
-function App() {
+const App = () => {
+  const [search, setSearch] = useState('');
+
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+    <FavoritesProvider>
+      <div className="container mx-auto p-4">
+        <SearchBar onSearch={setSearch} />
+        <MovieList search={search} />
+        <Favorites />
+      </div>
+    </FavoritesProvider>
   );
-}
+};
 
 export default App;
