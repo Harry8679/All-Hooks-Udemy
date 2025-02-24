@@ -3,29 +3,24 @@ import { FavoritesContext } from '../contexts/FavoritesContext';
 
 const MovieCard = ({ movie }) => {
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
-  const isFavorite = favorites.some((fav) => fav.imdbID === movie.imdbID);
+  const isFavorite = favorites.some((fav) => fav.id === movie.id);
 
   return (
-    <div className="border rounded-lg shadow-md p-4 mb-4 flex justify-between items-center">
-      <div className="flex items-center gap-4">
-        <img
-          src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/50'}
-          alt={movie.Title}
-          className="w-12 rounded"
-        />
-        <div>
-          <h3 className="font-bold text-lg">{movie.Title}</h3>
-          <p className="text-gray-600">{movie.Year}</p>
-        </div>
-      </div>
-
+    <div className="border p-4 rounded shadow">
+      <img
+        src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+        alt={movie.title}
+        className="mb-2"
+      />
+      <h3 className="font-bold">{movie.title}</h3>
+      <p>{movie.release_date}</p>
       <button
+        className={`mt-2 px-4 py-1 rounded ${
+          isFavorite ? 'bg-red-500' : 'bg-blue-500'
+        } text-white`}
         onClick={() => toggleFavorite(movie)}
-        className={`px-4 py-2 rounded transition ${
-          isFavorite ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
-        }`}
       >
-        {isFavorite ? 'Retirer 💔' : 'Favoris ❤️'}
+        {isFavorite ? 'Retirer' : 'Ajouter'}
       </button>
     </div>
   );

@@ -1,23 +1,26 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
-  const debounceRef = useRef(null);
+  const [value, setValue] = useState('');
+  const inputRef = useRef();
 
   useEffect(() => {
-    clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      onSearch(query);
-    }, 500);
-  }, [query, onSearch]);
+    inputRef.current.focus();
+  }, []);
+
+  const handleSearch = (e) => {
+    setValue(e.target.value);
+    onSearch(e.target.value);
+  };
 
   return (
     <input
+      ref={inputRef}
       type="text"
+      className="border p-2 w-full mb-4"
       placeholder="Recherche film..."
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      className="border p-2 w-full"
+      value={value}
+      onChange={handleSearch}
     />
   );
 };

@@ -14,8 +14,8 @@ export const FavoritesProvider = ({ children }) => {
 
   const toggleFavorite = (movie) => {
     setFavorites((prev) =>
-      prev.some((fav) => fav.imdbID === movie.imdbID)
-        ? prev.filter((fav) => fav.imdbID !== movie.imdbID)
+      prev.some((fav) => fav.id === movie.id)
+        ? prev.filter((fav) => fav.id !== movie.id)
         : [...prev, movie]
     );
   };

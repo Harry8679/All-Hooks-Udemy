@@ -5,20 +5,18 @@ const Favorites = () => {
   const { favorites } = useContext(FavoritesContext);
 
   const averageYear = useMemo(() => {
-    if (!favorites.length) return 0;
-    return (
-      favorites.reduce((sum, movie) => sum + parseInt(movie.Year), 0) /
-      favorites.length
-    ).toFixed(0);
+    if (favorites.length === 0) return 0;
+    const sum = favorites.reduce((acc, cur) => acc + Number(cur.release_date.slice(0, 4)), 0);
+    return (sum / favorites.length).toFixed(0);
   }, [favorites]);
 
   return (
-    <div>
-      <h3 className="text-xl">Favoris ({favorites.length})</h3>
+    <div className="mt-4">
+      <h2 className="font-bold">Favoris ({favorites.length})</h2>
       <p>Année moyenne : {averageYear}</p>
       <ul>
         {favorites.map((movie) => (
-          <li key={movie.imdbID}>{movie.Title} ({movie.Year})</li>
+          <li key={movie.id}>{movie.title} ({movie.release_date.slice(0,4)})</li>
         ))}
       </ul>
     </div>
